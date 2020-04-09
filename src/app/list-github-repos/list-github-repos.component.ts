@@ -43,4 +43,8 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  filterRepos() {
+    console.log('filtern');
+  }
 }
