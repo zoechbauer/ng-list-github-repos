@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+    <div class="form-group col-sm-3">
+      <label for="search">Filter Text</label>
+      <input
+        type="text"
+        id="search"
+        class="form-control"
+        [(ngModel)]="searchText"
+      />
+    </div>
+    <div class="form-group col-sm-3">
+      <label for="filter">Filter by</label>
+      <select
+        [(ngModel)]="filterProp"
+        class="form-control"
+        (change)="onFilterChange()"
+        ><option *ngFor="let prop of sortProperties" [value]="prop.value">
+          {{ prop.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-sm-12">
+      <div
+        class="panel panel-default"
+        *ngFor="let repo of repos | filter: searchText:filterProp"
+        style="cursor: pointer;"
+      >
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <!-- {{' repos.name1 + ' ' + repos.name2  }} -->
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="col-sm-2">
+                Name1
+              </div>
+              <div class="col-sm-10">
+                <!-- {{ repos.name1 }} -->
+                repos.name1
+              </div>
+              <div class="col-sm-2">
+                Name2
+              </div>
+              <div class="col-sm-10">repos.name2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
