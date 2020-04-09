@@ -1,113 +1,106 @@
-<div class="container">
-  <div class="row">
-    <div class="form-group col-sm-3">
-      <label for="org">Organization</label>
-      <input
-        type="text"
-        id="org"
-        class="form-control"
-        [(ngModel)]="searchOrg"
-      />
-    </div>
-    <div class="form-group col-sm-3">
-      <label for="search">Filter Text</label>
-      <input
-        type="text"
-        id="search"
-        class="form-control"
-        [(ngModel)]="searchText"
-      />
-    </div>
-    <div class="form-group col-sm-3">
-      <label for="filter">Filter by</label>
-      <select
-        [(ngModel)]="filterProp"
-        class="form-control"
-        (change)="onFilterPropChange()"
-        ><option *ngFor="let prop of filterProperties" [value]="prop.value">
-          {{ prop.name }}
-        </option>
-      </select>
-    </div>
-    <!-- Filter button is not necessary -->
-    <!-- <div class="form-group col-sm-2">
+<div class="row">
+  <div class="form-group col-md-3">
+    <label for="org">Organization</label>
+    <input type="text" id="org" class="form-control" [(ngModel)]="searchOrg" />
+  </div>
+  <div class="form-group col-md-5">
+    <label for="search">Filter Text</label>
+    <input
+      type="text"
+      id="search"
+      class="form-control"
+      [(ngModel)]="searchText"
+    />
+  </div>
+  <div class="form-group col-md-3">
+    <label for="filter">Filter by</label>
+    <select
+      [(ngModel)]="filterProp"
+      class="form-control"
+      (change)="onFilterPropChange()"
+      ><option *ngFor="let prop of filterProperties" [value]="prop.value">
+        {{ prop.name }}
+      </option>
+    </select>
+  </div>
+  <!-- Filter button is not necessary -->
+  <!-- <div class="form-group col-md-2">
       <button class="btn-btn-primary" (click)="filterRepos()">Filtern</button>
     </div> -->
-  </div>
-  <br />
-  <div class="row">
-    <div class="col-sm-12">
-      <div
-        class="panel panel-default"
-        *ngFor="let repo of repos | filter: searchText:filterProp"
-        style="cursor: pointer;"
-      >
-        <div class="panel-heading">
-          <div class="row">
-            <h3 class="panel-title col-sm-8">
-              <strong>{{ repo.name }}</strong>
-            </h3>
-            <h3 class="panel-title col-sm-1">
-              {{ !repo.private ? 'Public' : '' }}
-            </h3>
-            <h3 class="panel-title col-sm-3">Owner: {{ repo.owner.login }}</h3>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <div
+      class="panel panel-default"
+      *ngFor="let repo of repos | filter: searchText:filterProp"
+      style="cursor: pointer;"
+    >
+      <div class="panel-heading">
+        <div class="row">
+          <h3 class="panel-title col-md-8">
+            <strong>{{ repo.name }}</strong>
+          </h3>
+          <h3 class="panel-title col-md-1">
+            {{ !repo.private ? 'Public' : '' }}
+          </h3>
+          <h3 class="panel-title col-md-3">Owner: {{ repo.owner.login }}</h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-1">
+              Desc:
+            </div>
+            <div class="col-md-10">
+              {{ repo.description }}
+            </div>
           </div>
         </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="col-sm-1">
-                Desc:
-              </div>
-              <div class="col-sm-10">
-                {{ repo.description }}
-              </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-2">
+              URL:
+            </div>
+            <div class="col-md-10">
+              {{ repo.html_url }}
+            </div>
+            <div class="col-md-2">
+              WWW:
+            </div>
+            <div class="col-md-10">
+              {{ repo.homepage }}
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="col-sm-2">
-                URL:
-              </div>
-              <div class="col-sm-10">
-                {{ repo.html_url }}
-              </div>
-              <div class="col-sm-2">
-                WWW:
-              </div>
-              <div class="col-sm-10">
-                {{ repo.homepage }}
-              </div>
-            </div>
 
-            <div class="col-sm-6">
-              <div class="col-sm-2 col-xs-3">
-                Lang:
-              </div>
-              <div class="col-sm-8 col-xs-6">
-                {{ repo.language }}
-              </div>
-              <div class="col-sm-2 col-xs-3">
-                {{ repo.has_wiki ? 'Wiki' : '.' }}
-              </div>
-              <div class="col-sm-2 col-xs-3">
-                Size:
-              </div>
-              <div class="col-sm-2 col-xs-9">
-                {{ repo.size }}
-              </div>
-              <div class="col-sm-2 col-xs-3">
-                Watchers:
-              </div>
-              <div class="col-sm-2 col-xs-9">
-                {{ repo.watchers }}
-              </div>
-              <div class="col-sm-2 col-xs-3">
-                Forks:
-              </div>
-              <div class="col-sm-2 col-xs-9">
-                {{ repo.forks }}
-              </div>
+          <div class="col-md-6">
+            <div class="col-md-2 col-xs-3">
+              Lang:
+            </div>
+            <div class="col-md-8 col-xs-6">
+              {{ repo.language }}
+            </div>
+            <div class="col-md-2 col-xs-3">
+              {{ repo.has_wiki ? 'Wiki' : '.' }}
+            </div>
+            <div class="col-md-2 col-xs-3">
+              Size:
+            </div>
+            <div class="col-md-2 col-xs-9">
+              {{ repo.size }}
+            </div>
+            <div class="col-md-2 col-xs-3">
+              Watchers:
+            </div>
+            <div class="col-md-2 col-xs-9">
+              {{ repo.watchers }}
+            </div>
+            <div class="col-md-2 col-xs-3">
+              Forks:
+            </div>
+            <div class="col-md-2 col-xs-9">
+              {{ repo.forks }}
             </div>
           </div>
         </div>
