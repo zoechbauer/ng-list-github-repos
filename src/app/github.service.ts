@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface GitHubRepo {
   // TODO
@@ -22,11 +22,19 @@ export class GithubService {
 
   getUrl() {
     // TODO
-    return 'http://github.com/zoechbauer';
+    return 'https://api.github.com/users/zoechbauer';
+    // return 'https://api.github.com/orgs/angular/repos';
   }
 
   getGitHubRepos(): Observable<GitHubRepo[]> {
-    return this.http.get<GitHubRepo[]>(this.getUrl()).pipe(
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const options = {
+      headers: headers,
+      crossDomain: true,
+    };
+    return this.http.get<GitHubRepo[]>(this.getUrl(), options).pipe(
       tap((repos: GitHubRepo[]) => {
         console.log('repos', repos);
       }),
