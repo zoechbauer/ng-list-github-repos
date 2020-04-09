@@ -14,10 +14,10 @@ import { FilterPipe } from './filter.pipe';
 export class ListGithubReposComponent implements OnInit, OnDestroy {
   repos: GitHubOrgRepo[] = [];
   subscription: Subscription;
-  sortProp = '';
-  filterProp = '';
+  filterProp = 'name';
+  filterProperties: SelectOption[] = [];
   searchText = '';
-  sortProperties: SelectOption[] = [];
+  searchOrg = 'Angular';
 
   constructor(
     private githubService: GithubService,
@@ -32,13 +32,11 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
         this.repos = arrData;
         console.log('repos count', this.repos.length);
       });
+
+    this.filterProperties = this.githubService.getFilterProperties();
   }
 
-  onSortChange() {
-    console.log(this.sortProp);
-  }
-
-  onFilterChange() {
+  onFilterPropChange() {
     console.log(this.filterProp);
   }
 
@@ -46,7 +44,8 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  filterRepos() {
-    console.log('filtern');
-  }
+  // Filter button is not necessary because filter starts on changing the field values and on init
+  // filterRepos() {
+  //   console.log('filtern');
+  // }
 }

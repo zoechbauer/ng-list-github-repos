@@ -3,11 +3,21 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GitHubOrgRepo } from './githubOrganization.model';
+import { SelectOption } from './selectOption.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GithubService {
+  private filterProps: SelectOption[] = [
+    { name: 'Name', value: 'name' },
+    { name: 'Description', value: 'description' },
+    { name: 'Language', value: 'language' },
+    { name: 'Watchers', value: 'watchers' },
+    { name: 'Forks', value: 'forks' },
+    { name: 'Size', value: 'size' },
+  ];
+
   constructor(private http: HttpClient) {}
 
   getUrl() {
@@ -48,5 +58,9 @@ export class GithubService {
         return throwError(err);
       })
     );
+  }
+
+  getFilterProperties(): SelectOption[] {
+    return this.filterProps.slice();
   }
 }

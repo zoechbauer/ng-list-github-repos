@@ -1,6 +1,15 @@
 <div class="container">
   <div class="row">
     <div class="form-group col-sm-3">
+      <label for="org">Organization</label>
+      <input
+        type="text"
+        id="org"
+        class="form-control"
+        [(ngModel)]="searchOrg"
+      />
+    </div>
+    <div class="form-group col-sm-3">
       <label for="search">Filter Text</label>
       <input
         type="text"
@@ -14,15 +23,16 @@
       <select
         [(ngModel)]="filterProp"
         class="form-control"
-        (change)="onFilterChange()"
-        ><option *ngFor="let prop of sortProperties" [value]="prop.value">
+        (change)="onFilterPropChange()"
+        ><option *ngFor="let prop of filterProperties" [value]="prop.value">
           {{ prop.name }}
         </option>
       </select>
     </div>
-    <div class="form-group col-sm-2">
+    <!-- Filter button is not necessary -->
+    <!-- <div class="form-group col-sm-2">
       <button class="btn-btn-primary" (click)="filterRepos()">Filtern</button>
-    </div>
+    </div> -->
   </div>
   <br />
   <div class="row">
