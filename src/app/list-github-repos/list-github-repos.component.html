@@ -33,24 +33,71 @@
         style="cursor: pointer;"
       >
         <div class="panel-heading">
-          <h3 class="panel-title">
-            <!-- {{' repos.name1 + ' ' + repos.name2  }} -->
-          </h3>
+          <div class="row">
+            <h3 class="panel-title col-sm-8">
+              <strong>{{ repo.name }}</strong>
+            </h3>
+            <h3 class="panel-title col-sm-1">
+              {{ !repo.private ? 'Public' : '' }}
+            </h3>
+            <h3 class="panel-title col-sm-3">Owner: {{ repo.owner.login }}</h3>
+          </div>
         </div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-sm-6">
-              <div class="col-sm-2">
-                Name1
+            <div class="col-sm-12">
+              <div class="col-sm-1">
+                Desc:
               </div>
               <div class="col-sm-10">
-                <!-- {{ repos.name1 }} -->
-                repos.name1
+                {{ repo.description }}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="col-sm-2">
+                URL:
+              </div>
+              <div class="col-sm-10">
+                {{ repo.html_url }}
               </div>
               <div class="col-sm-2">
-                Name2
+                WWW:
               </div>
-              <div class="col-sm-10">repos.name2</div>
+              <div class="col-sm-10">
+                {{ repo.homepage }}
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="col-sm-2 col-xs-3">
+                Lang:
+              </div>
+              <div class="col-sm-8 col-xs-6">
+                {{ repo.language }}
+              </div>
+              <div class="col-sm-2 col-xs-3">
+                {{ repo.has_wiki ? 'Wiki' : '.' }}
+              </div>
+              <div class="col-sm-2 col-xs-3">
+                Size:
+              </div>
+              <div class="col-sm-2 col-xs-9">
+                {{ repo.size }}
+              </div>
+              <div class="col-sm-2 col-xs-3">
+                Watchers:
+              </div>
+              <div class="col-sm-2 col-xs-9">
+                {{ repo.watchers }}
+              </div>
+              <div class="col-sm-2 col-xs-3">
+                Forks:
+              </div>
+              <div class="col-sm-2 col-xs-9">
+                {{ repo.forks }}
+              </div>
             </div>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { GithubService, GitHubRepo, SelectOption } from '../github.service';
+import { GithubService } from '../service/github.service';
+import { GitHubOrgRepo } from '../service/githubOrganization.model';
+import { SelectOption } from '../service/selectOption.model';
 import { FilterPipe } from './filter.pipe';
 
 @Component({
@@ -10,7 +12,7 @@ import { FilterPipe } from './filter.pipe';
   styleUrls: ['./list-github-repos.component.css'],
 })
 export class ListGithubReposComponent implements OnInit, OnDestroy {
-  repos: any = [];
+  repos: GitHubOrgRepo[] = [];
   subscription: Subscription;
   sortProp = '';
   filterProp = '';
@@ -25,10 +27,10 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription = this.githubService
-      .getGitHubRepos()
-      .subscribe((arrData: GitHubRepo[]) => {
+      .getGitHubOrgRepos()
+      .subscribe((arrData: GitHubOrgRepo[]) => {
         this.repos = arrData;
-        console.log('ngOninit subscribe');
+        console.log('repos count', this.repos.length);
       });
   }
 
