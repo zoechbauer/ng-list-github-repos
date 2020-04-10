@@ -1,4 +1,17 @@
-# FilterGithub
+# Filter GitHub Repositories of Organizations
+
+- https://deeloper.github.com/v3/ is used
+- you can filter repos of an entered organization
+- you can enter filter text to apply on one repo property of a search
+- filtered properties can be Name, Description, Language, Watchers, Forks and Size
+
+How can you filter?
+
+- select a Organization and press filter button
+- all repos of this organization is fetched via api and stored in an internal array
+- you can then filter this array with additional filter text as described above
+
+## Developer Infos
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.4.
 
