@@ -11,10 +11,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./list-github-repos.component.css'],
 })
 export class ListGithubReposComponent implements OnInit, OnDestroy {
-  @ViewChild('filterForm', { static: true }) filterForm: NgForm;
+  // @ViewChild('filterForm', { static: true }) filterForm: NgForm;
   repos: GitHubOrgRepo[] = [];
   subscription: Subscription;
-  formSubscription: Subscription;
+  // formSubscription: Subscription;
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
   searchText = '';
@@ -38,15 +38,15 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.formSubscription.unsubscribe();
+    // this.formSubscription.unsubscribe();
   }
 
   filterRepos() {
     this.subscription = this.githubService
       .getGitHubOrgRepos(this.searchOrg)
       .subscribe(
-        (arrData: GitHubOrgRepo[]) => {
-          this.repos = arrData;
+        (repos: GitHubOrgRepo[]) => {
+          this.repos = repos;
           this.errors = false;
           console.log('repos count', this.repos.length);
         },
