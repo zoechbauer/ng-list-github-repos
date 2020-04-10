@@ -1,6 +1,6 @@
 <div class="row">
   <form #filterForm="ngForm" (ngSubmit)="filterRepos()">
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="org">Organization</label>
       <input
         type="text"
@@ -34,7 +34,7 @@
       />
     </div>
     <div class="form-group col-md-2">
-      <label for="filter">Filter by</label>
+      <label for="filter">Filter & Sort by</label>
       <select
         id="filter"
         [(ngModel)]="filterProp"
@@ -43,6 +43,19 @@
         ><option *ngFor="let prop of filterProperties" [value]="prop.value">
           {{ prop.name }}
         </option>
+      </select>
+    </div>
+    <div class="form-group col-md-1">
+      <label for="sort">Order</label>
+      <select
+        id="sort"
+        [(ngModel)]="sortProp"
+        class="form-control"
+        name="sortProp"
+        style="width: 60px;"
+      >
+        <option>A</option>
+        <option>D</option>
       </select>
     </div>
     <div class="form-group col-md-2">
@@ -62,7 +75,11 @@
   <div class="col-md-12">
     <div
       class="panel panel-default"
-      *ngFor="let repo of repos | filter: searchText:filterProp"
+      *ngFor="
+        let repo of repos
+          | filter: searchText:filterProp
+          | sort: filterProp:sortProp
+      "
       style="cursor: pointer;"
     >
       <div class="panel-heading">

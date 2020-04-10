@@ -17,6 +17,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   // formSubscription: Subscription;
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
+  sortProp = 'A';
   searchText = '';
   searchTextLabelForText =
     'Filter repos in FilterBy Column within Organization';
