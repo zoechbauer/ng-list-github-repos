@@ -1,5 +1,5 @@
 <div class="row">
-  <form #filterForm="ngForm" (ngSubmit)="filterRepos(filterForm)">
+  <form #filterForm="ngForm" (ngSubmit)="filterRepos()">
     <div class="form-group col-md-3">
       <label for="org">Organization</label>
       <input
@@ -8,10 +8,23 @@
         class="form-control"
         [(ngModel)]="searchOrg"
         name="searchOrg"
+        required
+        #org="ngModel"
       />
+      <div class="alert alert-danger" *ngIf="!org.valid">
+        Please enter Organization and press Filter button
+      </div>
     </div>
     <div class="form-group col-md-5">
-      <label for="search">Filter Text</label>
+      <label for="search">{{
+        filterProp === 'watchers'
+          ? searchTextLabelForNumbers
+          : filterProp === 'forks'
+          ? searchTextLabelForNumbers
+          : filterProp === 'size'
+          ? searchTextLabelForNumbers
+          : searchTextLabelForText
+      }}</label>
       <input
         type="text"
         id="search"
@@ -34,14 +47,18 @@
     </div>
     <div class="form-group col-md-2">
       <br />
-      <button type="submit" class="btn btn-primary filter-button">
+      <button
+        type="submit"
+        class="btn btn-primary filter-button"
+        [disabled]="!filterForm.valid"
+      >
         Filter Organization
       </button>
     </div>
   </form>
 </div>
 <br />
-<div class="row">
+<div class="row" *ngIf="!errors">
   <div class="col-md-12">
     <div
       class="panel panel-default"
@@ -116,6 +133,17 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="errors">
+  <div class="col-xs-12">
+    <div class="panel panel-danger">
+      <div class="panel-heading">Please change the entered Organization!</div>
+      <div class="panel-body">
+        There are no repositories for
+        <strong>Organization {{ searchOrg }}</strong> available!
       </div>
     </div>
   </div>

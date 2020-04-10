@@ -18,14 +18,20 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
   searchText = '';
+  searchTextLabelForText =
+    'Filter repos in FilterBy Column within Organization';
+  searchTextLabelForNumbers =
+    'Filter repos with value in FilterBy Column greater than ';
   searchOrg = 'Angular';
+  errors = false;
 
   constructor(private githubService: GithubService) {}
 
   ngOnInit(): void {
-    this.formSubscription = this.filterForm.valueChanges.subscribe((values) => {
-      console.log(this.filterForm.value);
-    });
+    // this.formSubscription = this.filterForm.valueChanges.subscribe((values) => {
+    //   console.log(this.filterProp);
+    //   console.log('FormValues', this.filterForm.value);
+    // });
 
     this.filterProperties = this.githubService.getFilterProperties();
   }
@@ -35,13 +41,18 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     this.formSubscription.unsubscribe();
   }
 
-  filterRepos(filterForm: NgForm) {
-    console.log('form-values', filterForm.value);
+  filterRepos() {
     this.subscription = this.githubService
       .getGitHubOrgRepos(this.searchOrg)
-      .subscribe((arrData: GitHubOrgRepo[]) => {
-        this.repos = arrData;
-        console.log('repos count', this.repos.length);
-      });
+      .subscribe(
+        (arrData: GitHubOrgRepo[]) => {
+          this.repos = arrData;
+          this.errors = false;
+          console.log('repos count', this.repos.length);
+        },
+        (errors) => {
+          this.errors = true;
+        }
+      );
   }
 }
