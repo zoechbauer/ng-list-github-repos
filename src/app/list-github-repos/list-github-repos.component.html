@@ -1,32 +1,44 @@
 <div class="row">
-  <div class="form-group col-md-3">
-    <label for="org">Organization</label>
-    <input type="text" id="org" class="form-control" [(ngModel)]="searchOrg" />
-  </div>
-  <div class="form-group col-md-5">
-    <label for="search">Filter Text</label>
-    <input
-      type="text"
-      id="search"
-      class="form-control"
-      [(ngModel)]="searchText"
-    />
-  </div>
-  <div class="form-group col-md-3">
-    <label for="filter">Filter by</label>
-    <select
-      [(ngModel)]="filterProp"
-      class="form-control"
-      (change)="onFilterPropChange()"
-      ><option *ngFor="let prop of filterProperties" [value]="prop.value">
-        {{ prop.name }}
-      </option>
-    </select>
-  </div>
-  <!-- Filter button is not necessary -->
-  <!-- <div class="form-group col-md-2">
-      <button class="btn-btn-primary" (click)="filterRepos()">Filtern</button>
-    </div> -->
+  <form #filterForm="ngForm" (ngSubmit)="filterRepos(filterForm)">
+    <div class="form-group col-md-3">
+      <label for="org">Organization</label>
+      <input
+        type="text"
+        id="org"
+        class="form-control"
+        [(ngModel)]="searchOrg"
+        name="searchOrg"
+      />
+    </div>
+    <div class="form-group col-md-5">
+      <label for="search">Filter Text</label>
+      <input
+        type="text"
+        id="search"
+        class="form-control"
+        name="search"
+        [(ngModel)]="searchText"
+      />
+    </div>
+    <div class="form-group col-md-2">
+      <label for="filter">Filter by</label>
+      <select
+        id="filter"
+        [(ngModel)]="filterProp"
+        class="form-control"
+        name="filterProp"
+        ><option *ngFor="let prop of filterProperties" [value]="prop.value">
+          {{ prop.name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <br />
+      <button type="submit" class="btn btn-primary filter-button">
+        Filter Organization
+      </button>
+    </div>
+  </form>
 </div>
 <br />
 <div class="row">

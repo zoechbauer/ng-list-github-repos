@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GithubService } from '../service/github.service';
 import { GitHubOrgRepo } from '../service/githubOrganization.model';
 import { SelectOption } from '../service/selectOption.model';
-import { FilterPipe } from './filter.pipe';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-list-github-repos',
@@ -12,40 +11,37 @@ import { FilterPipe } from './filter.pipe';
   styleUrls: ['./list-github-repos.component.css'],
 })
 export class ListGithubReposComponent implements OnInit, OnDestroy {
+  @ViewChild('filterForm', { static: true }) filterForm: NgForm;
   repos: GitHubOrgRepo[] = [];
   subscription: Subscription;
+  formSubscription: Subscription;
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
   searchText = '';
   searchOrg = 'Angular';
 
-  constructor(
-    private githubService: GithubService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private githubService: GithubService) {}
 
   ngOnInit(): void {
-    this.subscription = this.githubService
-      .getGitHubOrgRepos()
-      .subscribe((arrData: GitHubOrgRepo[]) => {
-        this.repos = arrData;
-        console.log('repos count', this.repos.length);
-      });
+    this.formSubscription = this.filterForm.valueChanges.subscribe((values) => {
+      console.log(this.filterForm.value);
+    });
 
     this.filterProperties = this.githubService.getFilterProperties();
   }
 
-  onFilterPropChange() {
-    console.log(this.filterProp);
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.formSubscription.unsubscribe();
   }
 
-  // Filter button is not necessary because filter starts on changing the field values and on init
-  // filterRepos() {
-  //   console.log('filtern');
-  // }
+  filterRepos(filterForm: NgForm) {
+    console.log('form-values', filterForm.value);
+    this.subscription = this.githubService
+      .getGitHubOrgRepos(this.searchOrg)
+      .subscribe((arrData: GitHubOrgRepo[]) => {
+        this.repos = arrData;
+        console.log('repos count', this.repos.length);
+      });
+  }
 }
