@@ -36,6 +36,7 @@ export class GithubService {
   getGitHubOrgRepos(org: string): Observable<GitHubOrgRepo[]> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      Accept: 'application/vnd.github.v3.+json',
     });
     const options = {
       headers: headers,
