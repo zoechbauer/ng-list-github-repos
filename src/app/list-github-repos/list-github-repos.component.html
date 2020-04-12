@@ -80,7 +80,6 @@
           | filter: searchText:filterProp
           | sort: filterProp:sortProp
       "
-      style="cursor: pointer;"
     >
       <div class="panel-heading">
         <div class="row">
@@ -109,13 +108,25 @@
             <em class="col-md-2">
               URL:
             </em>
-            <div class="col-md-10">
-              {{ repo.html_url }}
+            <div *ngIf="repo.html_url">
+              <a href="{{ repo.html_url }}" target="_blank" class="col-md-10">
+                {{ repo.html_url }}
+              </a>
+            </div>
+            <div *ngIf="!repo.html_url">
+              <div class="col-md-10">
+                {{ repo.html_url }}
+              </div>
             </div>
             <em class="col-md-2">
               WWW:
             </em>
-            <div class="col-md-10">
+            <div *ngIf="repo.homepage">
+              <a href="{{ repo.homepage }}" target="_blank" class="col-md-10">
+                {{ repo.html_url }}
+              </a>
+            </div>
+            <div class="col-md-10" *ngIf="!repo.homepage">
               {{ repo.homepage }}
             </div>
           </div>
