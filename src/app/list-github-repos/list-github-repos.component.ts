@@ -25,6 +25,8 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     'Filter repos with value in FilterBy Column greater than ';
   searchOrg = 'Angular';
   errors = false;
+  pageNumber: number;
+  searchTextOld = '';
 
   constructor(private githubService: GithubService) {}
 
@@ -35,6 +37,13 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     // });
 
     this.filterProperties = this.githubService.getFilterProperties();
+
+    // github api is called in a loop until all records of the organization are received
+    this.githubService.pageNumberSubject.subscribe((nextPageNumber) => {
+      this.pageNumber = nextPageNumber;
+      console.log('Loop api: pageNumber', this.pageNumber);
+      this.filterReposApi();
+    });
   }
 
   ngOnDestroy() {
@@ -43,16 +52,31 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   }
 
   filterRepos() {
+    this.searchTextOld = this.searchText;
+    this.searchText = 'please wait ...';
+    this.repos = [];
+    this.pageNumber = 1;
+    this.filterReposApi();
+  }
+
+  filterReposApi() {
     this.subscription = this.githubService
-      .getGitHubOrgRepos(this.searchOrg)
+      .getGitHubOrgRepos(this.searchOrg, this.pageNumber)
       .subscribe(
         (repos: GitHubOrgRepo[]) => {
-          this.repos = repos;
+          // add repos to array
+          this.repos.push(...repos);
           this.errors = false;
-          console.log('repos count', this.repos.length);
+          // increment pagenumber or exit api
+          this.pageNumber = repos.length > 0 ? this.pageNumber++ : 0;
+          if (this.pageNumber === 0) {
+            this.searchText = this.searchTextOld;
+          }
+          console.log('api-repos this.repos', repos.length, this.repos.length);
         },
         (errors) => {
           this.errors = true;
+          console.log('ERR in filterRepos', errors);
         }
       );
   }
