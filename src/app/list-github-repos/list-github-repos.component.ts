@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GithubService } from '../service/github.service';
 import { GitHubOrgRepo } from '../service/githubOrganization.model';
 import { SelectOption } from '../service/selectOption.model';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-list-github-repos',
@@ -14,7 +13,6 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   BUSY_TEXT = 'please wait ...';
   repos: GitHubOrgRepo[] = [];
   subscription: Subscription;
-  // formSubscription: Subscription;
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
   sortProp = 'A';
@@ -43,16 +41,17 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
         .getGitHubOrgRepos(this.searchOrg, this.pageNumber)
         .subscribe(
           (repos: GitHubOrgRepo[]) => {
-            // add repos to array
-            this.repos.push(...repos);
             this.errors = false;
-            // increment pagenumber or exit api
+            // end loop if empty array returned
             this.pageNumber = repos.length > 0 ? this.pageNumber++ : 0;
-            if (this.pageNumber === 0) {
+            if (this.pageNumber > 0) {
+              // add repos to array
+              this.repos.push(...repos);
+            } else {
               this.searchText = this.searchTextOld;
             }
             console.log(
-              'api-repos this.repos',
+              'currentRepos & totalRepos',
               repos.length,
               this.repos.length
             );
