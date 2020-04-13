@@ -114,9 +114,7 @@
               </a>
             </div>
             <div *ngIf="!repo.html_url">
-              <div class="col-md-10">
-                {{ repo.html_url }}
-              </div>
+              <div class="col-md-10"></div>
             </div>
             <em class="col-md-2">
               WWW:
@@ -126,9 +124,7 @@
                 {{ repo.homepage }}
               </a>
             </div>
-            <div class="col-md-10" *ngIf="!repo.homepage">
-              {{ repo.homepage }}
-            </div>
+            <div class="col-md-10" *ngIf="!repo.homepage"></div>
           </div>
 
           <div class="col-md-6">
