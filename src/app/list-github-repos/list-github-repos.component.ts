@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./list-github-repos.component.css'],
 })
 export class ListGithubReposComponent implements OnInit, OnDestroy {
-  // @ViewChild('filterForm', { static: true }) filterForm: NgForm;
+  BUSY_TEXT = 'please wait ...';
   repos: GitHubOrgRepo[] = [];
   subscription: Subscription;
   // formSubscription: Subscription;
@@ -70,8 +70,12 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   }
 
   filterRepos() {
+    // wait until api loop is closed
+    if (this.searchText === this.BUSY_TEXT) {
+      return;
+    }
     this.searchTextOld = this.searchText;
-    this.searchText = 'please wait ...';
+    this.searchText = this.BUSY_TEXT;
     this.repos = [];
     this.pageNumber = 1;
     this.githubService.pageNumberSubject.next(this.pageNumber);
