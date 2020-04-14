@@ -91,6 +91,8 @@
       <div
         class="panel-body small-padding"
         *ngFor="let org of resultsOrg | async | sort: 'login':sortProp"
+        Style="cursor: pointer;"
+        (click)="onClickOrganization($event)"
       >
         {{ org.login }}
       </div>

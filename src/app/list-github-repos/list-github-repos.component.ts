@@ -105,4 +105,9 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     this.showOrganizations = true;
     this.latestSearchOrg.next(searchText);
   }
+
+  onClickOrganization(event: Event) {
+    console.log(event);
+    this.searchOrg = (event.target as HTMLElement).innerText;
+  }
 }
