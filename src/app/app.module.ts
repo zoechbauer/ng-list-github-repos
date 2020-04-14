@@ -9,6 +9,7 @@ import { ListGithubReposComponent } from './list-github-repos/list-github-repos.
 import { HeaderComponent } from './header/header.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { ListOrganizationsComponent } from './list-organizations/list-organizations.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SortPipe } from './pipes/sort.pipe';
     HeaderComponent,
     FilterPipe,
     SortPipe,
+    ListOrganizationsComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [],

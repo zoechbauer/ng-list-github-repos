@@ -1,0 +1,57 @@
+<!-- Filter section -->
+<div class="row">
+  <form #filterForm="ngForm">
+    <div class="form-group col-md-3">
+      <label for="org">Organization</label>
+      <input
+        type="text"
+        id="org"
+        class="form-control"
+        [(ngModel)]="searchOrg"
+        name="searchOrg"
+        required
+        #org="ngModel"
+        (ngModelChange)="filterOrganization($event)"
+      />
+      <div class="alert alert-danger" *ngIf="!org.valid">
+        Please search Organization and select one by click on Name
+      </div>
+    </div>
+  </form>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading" *ngIf="!allOrgs">
+        <strong>Searching Organizations</strong> - Only the
+        <strong>first 100 of {{ totalCountSelectedOrg }} Login names</strong>
+        starting with the Search text are displayed
+      </div>
+      <div class="panel-heading" *ngIf="allOrgs">
+        <strong>Searching Organizations</strong> - please click on Organisation
+        Name to select Organization for filtering Repositories!
+      </div>
+      <div
+        class="panel-body small-padding"
+        *ngFor="let org of resultsOrg | async | sort: 'login':'asc'"
+        Style="cursor: pointer;"
+      >
+        <div class="col-md-1">
+          <img
+            src="{{ org.avatar }}"
+            alt="Avatar of organization"
+            class="org-avatar"
+            style="cursor: default;"
+          />
+        </div>
+        <div class="col-md-4" (click)="onClickOrganization($event)">
+          {{ org.login }}
+        </div>
+        <div class="col-md-4">
+          <a href="{{ org.url }}" target="_blank">&rarr; GitHub WebSite</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

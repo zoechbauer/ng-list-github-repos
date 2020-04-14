@@ -1,3 +1,7 @@
+<app-list-organizations
+  (selectedOrg)="showReposFilter($event)"
+  *ngIf="showOrganizations"
+></app-list-organizations>
 <!-- Filter section -->
 <div class="row">
   <form #filterForm="ngForm" (ngSubmit)="filterRepos()">
@@ -11,7 +15,6 @@
         name="searchOrg"
         required
         #org="ngModel"
-        (ngModelChange)="filterOrganization($event)"
       />
       <div class="alert alert-danger" *ngIf="!org.valid">
         Please enter Organization and press Filter button
@@ -79,42 +82,7 @@
   </form>
 </div>
 <br />
-<!-- Organization Section -->
-<div class="row" *ngIf="showOrganizations">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading" *ngIf="!allOrgs">
-        <strong>Searching Organizations</strong> - Only the
-        <strong>first 100 of {{ totalCountSelectedOrg }} Login names</strong>
-        starting with the Search text are displayed
-      </div>
-      <div class="panel-heading" *ngIf="allOrgs">
-        <strong>Searching Organizations</strong> - please click on Organisation
-        Name to select Organization for filtering Repositories!
-      </div>
-      <div
-        class="panel-body small-padding"
-        *ngFor="let org of resultsOrg | async | sort: 'login':sortProp"
-        Style="cursor: pointer;"
-      >
-        <div class="col-md-1">
-          <img
-            src="{{ org.avatar }}"
-            alt="Avatar of organization"
-            class="org-avatar"
-            style="cursor: default;"
-          />
-        </div>
-        <div class="col-md-4" (click)="onClickOrganization($event)">
-          {{ org.login }}
-        </div>
-        <div class="col-md-4">
-          <a href="{{ org.url }}" target="_blank">&rarr; GitHub WebSite</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <!-- Repository Section -->
 <div class="row" *ngIf="!errors && !showOrganizations">
   <div class="col-md-12">
