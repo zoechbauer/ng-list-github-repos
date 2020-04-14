@@ -110,7 +110,11 @@ export class GithubService {
       }),
       map((res: any) =>
         res.items.map((item) => {
-          const obj = { login: item.login };
+          const obj = {
+            login: item.login,
+            avatar: item.avatar_url,
+            url: item.html_url,
+          };
           return obj;
         })
       )

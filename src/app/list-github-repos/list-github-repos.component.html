@@ -1,7 +1,7 @@
 <!-- Filter section -->
 <div class="row">
   <form #filterForm="ngForm" (ngSubmit)="filterRepos()">
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
       <label for="org">Organization</label>
       <input
         type="text"
@@ -23,7 +23,7 @@
         Total: {{ repos.length }}
       </div>
     </div>
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-4">
       <label for="search">{{
         filterProp === 'watchers'
           ? searchTextLabelForNumbers
@@ -92,9 +92,21 @@
         class="panel-body small-padding"
         *ngFor="let org of resultsOrg | async | sort: 'login':sortProp"
         Style="cursor: pointer;"
-        (click)="onClickOrganization($event)"
       >
-        {{ org.login }}
+        <div class="col-md-1">
+          <img
+            src="{{ org.avatar }}"
+            alt="Avatar of organization"
+            class="org-avatar"
+            style="cursor: none;"
+          />
+        </div>
+        <div class="col-md-4" (click)="onClickOrganization($event)">
+          {{ org.login }}
+        </div>
+        <div class="col-md-4">
+          <a href="{{ org.url }}" target="_blank">&rarr; GitHub WebSite</a>
+        </div>
       </div>
     </div>
   </div>

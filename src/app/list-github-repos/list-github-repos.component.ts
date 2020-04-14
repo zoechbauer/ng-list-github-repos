@@ -23,10 +23,8 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   filterProperties: SelectOption[] = [];
   sortProp = 'A';
   searchText = '';
-  searchTextLabelForText =
-    'Filter repos in FilterBy Column within Organization';
-  searchTextLabelForNumbers =
-    'Filter repos with value in FilterBy Column greater than ';
+  searchTextLabelForText = 'Filter repos in FilterBy Column within ORG';
+  searchTextLabelForNumbers = 'Filter repos with value greater than ';
   searchOrg = 'Angular';
   errors = false;
   pageNumber: number;
