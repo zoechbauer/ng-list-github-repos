@@ -21,6 +21,7 @@ export class GithubService {
   private filterOrg: string;
   private pageNumber: number;
   pageNumberSubject = new Subject<number>();
+  totalCountOrgSubject = new Subject<number>();
 
   constructor(private http: HttpClient) {}
 
@@ -123,9 +124,11 @@ export class GithubService {
   getGithubOrganizations(org: string) {
     return this.http.get(this.getUrl(this.UrlType.Organization, org)).pipe(
       tap((res: any) => {
-        console.log('items', res);
-        const items = res.items;
-        console.log(items[0].login);
+        // console.log('items', res);
+        // const items = res.items;
+        // console.log(items[0].login);
+        console.log('total_count', res.total_count);
+        this.totalCountOrgSubject.next(res.total_count);
       }),
       map((res: any) =>
         res.items.map((item) => {

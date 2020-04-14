@@ -83,10 +83,14 @@
 <div class="row" *ngIf="showOrganizations">
   <div class="col-md-12">
     <div class="panel panel-default">
-      <div class="panel-heading">
+      <div class="panel-heading" *ngIf="!allOrgs">
         <strong>Searching Organizations</strong> - Only the
-        <strong>first 100 Login names</strong> starting with the Search text are
-        displayed
+        <strong>first 100 of {{ totalCountSelectedOrg }} Login names</strong>
+        starting with the Search text are displayed
+      </div>
+      <div class="panel-heading" *ngIf="allOrgs">
+        <strong>Searching Organizations</strong> - please click on Organisation
+        Name to select Organization for filtering Repositories!
       </div>
       <div
         class="panel-body small-padding"
@@ -98,7 +102,7 @@
             src="{{ org.avatar }}"
             alt="Avatar of organization"
             class="org-avatar"
-            style="cursor: none;"
+            style="cursor: default;"
           />
         </div>
         <div class="col-md-4" (click)="onClickOrganization($event)">
