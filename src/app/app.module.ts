@@ -7,8 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListGithubReposComponent } from './list-github-repos/list-github-repos.component';
 import { HeaderComponent } from './header/header.component';
-import { FilterPipe } from './list-github-repos/filter.pipe';
-import { SortPipe } from './list-github-repos/sort.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
