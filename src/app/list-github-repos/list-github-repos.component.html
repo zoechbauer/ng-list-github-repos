@@ -1,3 +1,4 @@
+<!-- Filter section -->
 <div class="row">
   <form #filterForm="ngForm" (ngSubmit)="filterRepos()">
     <div class="form-group col-md-2">
@@ -10,11 +11,15 @@
         name="searchOrg"
         required
         #org="ngModel"
+        (ngModelChange)="filterOrganization($event)"
       />
       <div class="alert alert-danger" *ngIf="!org.valid">
         Please enter Organization and press Filter button
       </div>
-      <div *ngIf="repos.length" class="text-right total-repos">
+      <div
+        *ngIf="repos.length && !showOrganizations"
+        class="text-right total-repos"
+      >
         Total: {{ repos.length }}
       </div>
     </div>
@@ -74,7 +79,26 @@
   </form>
 </div>
 <br />
-<div class="row" *ngIf="!errors">
+<!-- Organization Section -->
+<div class="row" *ngIf="showOrganizations">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Searching Organizations</strong> - Only the
+        <strong>first 100 Login names</strong> starting with the Search text are
+        displayed
+      </div>
+      <div
+        class="panel-body small-padding"
+        *ngFor="let org of resultsOrg | async | sort: 'login':sortProp"
+      >
+        {{ org.login }}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Repository Section -->
+<div class="row" *ngIf="!errors && !showOrganizations">
   <div class="col-md-12">
     <div
       class="panel panel-default"
@@ -164,6 +188,7 @@
     </div>
   </div>
 </div>
+<!-- Error Section -->
 <div class="row" *ngIf="errors">
   <div class="col-xs-12">
     <div class="panel panel-danger">

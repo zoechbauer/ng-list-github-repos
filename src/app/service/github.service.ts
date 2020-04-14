@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, Subject } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GitHubOrgRepo } from './githubOrganization.model';
 import { SelectOption } from './selectOption.model';
@@ -93,5 +93,27 @@ export class GithubService {
 
   getFilterProperties(): SelectOption[] {
     return this.filterProps.slice();
+  }
+
+  getGithubOrganizations(org: string) {
+    // const url = 'https://api.github.com/organizations';
+    const baseUrl = 'https://api.github.com/search/users';
+    const query = `?q=${org} type:organization&per_page=100`;
+    const url = baseUrl + query;
+    console.log(url);
+
+    return this.http.get(url).pipe(
+      tap((res: any) => {
+        console.log('items', res);
+        const items = res.items;
+        console.log(items[0].login);
+      }),
+      map((res: any) =>
+        res.items.map((item) => {
+          const obj = { login: item.login };
+          return obj;
+        })
+      )
+    );
   }
 }

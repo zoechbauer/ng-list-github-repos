@@ -6,3 +6,7 @@
 .total-repos {
   font-size: 75%;
 }
+
+.small-padding {
+  padding: 1px 15px;
+}

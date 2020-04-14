@@ -1,8 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, Observable } from 'rxjs';
 import { GithubService } from '../service/github.service';
 import { GitHubOrgRepo } from '../service/githubOrganization.model';
 import { SelectOption } from '../service/selectOption.model';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  filter,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-github-repos',
@@ -25,11 +31,24 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   errors = false;
   pageNumber: number;
   searchTextOld = '';
+  resultsOrg: Observable<any>;
+  latestSearchOrg = new Subject<string>();
+  showOrganizations = false;
 
   constructor(private githubService: GithubService) {}
 
   ngOnInit(): void {
     this.filterProperties = this.githubService.getFilterProperties();
+
+    // get first 100 organization Login name that filter the entered ORG text
+    this.resultsOrg = this.latestSearchOrg.pipe(
+      debounceTime(750),
+      distinctUntilChanged(),
+      filter((searchText) => !!searchText),
+      switchMap((searchText) =>
+        this.githubService.getGithubOrganizations(searchText)
+      )
+    );
 
     // github api is called in a loop until all records of the organization are received
     // whenever a next Page Number oberservable arrives, the api is called
@@ -58,6 +77,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
           },
           (errors) => {
             this.errors = true;
+            this.searchText = this.searchTextOld;
             console.log('ERR in filterRepos', errors);
           }
         );
@@ -73,10 +93,16 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     if (this.searchText === this.BUSY_TEXT) {
       return;
     }
+    this.showOrganizations = false;
     this.searchTextOld = this.searchText;
     this.searchText = this.BUSY_TEXT;
     this.repos = [];
     this.pageNumber = 1;
     this.githubService.pageNumberSubject.next(this.pageNumber);
+  }
+
+  filterOrganization(searchText: string) {
+    this.showOrganizations = true;
+    this.latestSearchOrg.next(searchText);
   }
 }
