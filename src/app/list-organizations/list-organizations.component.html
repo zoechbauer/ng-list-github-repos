@@ -13,8 +13,8 @@
         #org="ngModel"
         (ngModelChange)="filterOrganization($event)"
       />
-      <div class="alert alert-danger" *ngIf="!org.valid">
-        Please search Organization and select it by click on Name
+      <div *ngIf="!org.valid">
+        Please search Organization <br />and select it by click on Name
       </div>
     </div>
   </form>

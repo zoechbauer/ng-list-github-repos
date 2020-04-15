@@ -4,7 +4,7 @@ import { ListGithubReposComponent } from './list-github-repos/list-github-repos.
 import { ListOrganizationsComponent } from './list-organizations/list-organizations.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/repos/api', pathMatch: 'full' },
+  { path: '', redirectTo: '/org/api', pathMatch: 'full' },
   { path: 'repos/api', component: ListGithubReposComponent },
   { path: 'org/api', component: ListOrganizationsComponent },
 ];
