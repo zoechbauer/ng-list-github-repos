@@ -37,7 +37,6 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     // store selected organization in org search field
     this.githubService.selectedOrg.subscribe((selectedOrg) => {
       this.searchOrg = selectedOrg;
-      console.log('subscribe to selectedOrg', selectedOrg, this.searchOrg);
     });
 
     // github api is called in a loop until all records of the organization are received
@@ -57,7 +56,6 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
               this.repos.push(...repos);
             } else {
               this.searchText = this.searchTextOld;
-              console.log('repos at end', this.repos);
             }
             this.errors = false;
             console.log(

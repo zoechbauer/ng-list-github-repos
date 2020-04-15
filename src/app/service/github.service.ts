@@ -55,7 +55,7 @@ export class GithubService {
         break;
     }
     url = baseUrl + query;
-    console.log(url);
+    console.log('url', url);
     return url;
   }
 

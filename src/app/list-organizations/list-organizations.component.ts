@@ -25,6 +25,7 @@ export class ListOrganizationsComponent implements OnInit, OnDestroy {
   // show if all organizations of selection are displayed
   allOrgs = true;
   totalCountSelectedOrg = 0;
+  searchFinished = false;
 
   constructor(private githubService: GithubService, private router: Router) {}
 
@@ -43,6 +44,7 @@ export class ListOrganizationsComponent implements OnInit, OnDestroy {
       (totalCount) => {
         this.totalCountSelectedOrg = totalCount;
         this.allOrgs = totalCount < 100 ? true : false;
+        this.searchFinished = true;
       }
     );
   }

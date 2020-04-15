@@ -168,15 +168,16 @@
 <div class="row" *ngIf="errors">
   <div class="col-xs-12">
     <div class="panel panel-danger">
-      <div class="panel-heading">Please change the entered Organization!</div>
+      <div class="panel-heading">No Repositories found!</div>
       <div class="panel-body">
         There are no repositories for the selected
         <strong>Organization {{ searchOrg }}</strong> available!
         <br />
         <br />
         <em>
-          Or you pressed the Filter Button to often. <br />Github only allows a
-          limited number of api calls per hour (e.g. 60 per hour).
+          Or you used this function to often.<br />Github only allows a
+          <strong>limited number of api calls per hour</strong> (e.g. 60 calls
+          per hour).<br />Please try it later again.
         </em>
       </div>
     </div>
