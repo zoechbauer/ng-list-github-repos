@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Output } from '@angular/core';
+import { Subscription, Observable, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -6,8 +7,7 @@ import {
   filter,
 } from 'rxjs/operators';
 import { GithubService } from '../service/github.service';
-import { Subscription, Observable, Subject } from 'rxjs';
-import { EventEmitter } from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-organizations',
@@ -15,7 +15,6 @@ import { EventEmitter } from 'protractor';
   styleUrls: ['./list-organizations.component.css'],
 })
 export class ListOrganizationsComponent implements OnInit, OnDestroy {
-  @Output() selectedOrg = new EventEmitter();
   searchOrg = 'Angular';
   // switch between ORG grid and repos grid
   showOrganizations = false;
@@ -27,7 +26,7 @@ export class ListOrganizationsComponent implements OnInit, OnDestroy {
   allOrgs = true;
   totalCountSelectedOrg = 0;
 
-  constructor(private githubService: GithubService) {}
+  constructor(private githubService: GithubService, private router: Router) {}
 
   ngOnInit(): void {
     // get first 100 organization Login name that filter the entered ORG text
@@ -51,7 +50,8 @@ export class ListOrganizationsComponent implements OnInit, OnDestroy {
   // emit selected org to parent which will hide this component
   onClickOrganization(event: Event) {
     const selectedOrg = (event.target as HTMLElement).innerText;
-    this.selectedOrg.emit(selectedOrg);
+    this.githubService.selectedOrg.next(selectedOrg);
+    this.router.navigate(['/repos/api']);
   }
 
   // filter organizations
@@ -61,6 +61,8 @@ export class ListOrganizationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.totalCountOrgSubscription.unsubscribe();
+    if (this.totalCountOrgSubscription) {
+      this.totalCountOrgSubscription.unsubscribe();
+    }
   }
 }

@@ -71,7 +71,9 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.getGitHubOrgReposSubscription.unsubscribe();
+    if (this.getGitHubOrgReposSubscription) {
+      this.getGitHubOrgReposSubscription.unsubscribe();
+    }
   }
 
   // filter repos of selected organization and searchText
@@ -86,11 +88,5 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     this.repos = [];
     this.pageNumber = 1;
     this.githubService.pageNumberSubject.next(this.pageNumber);
-  }
-
-  // hide org selection
-  showReposFilter(event: Event) {
-    console.log('event', event);
-    this.showOrganizations = false;
   }
 }

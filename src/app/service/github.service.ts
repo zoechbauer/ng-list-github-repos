@@ -22,6 +22,7 @@ export class GithubService {
   private pageNumber: number;
   pageNumberSubject = new Subject<number>();
   totalCountOrgSubject = new Subject<number>();
+  selectedOrg = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
