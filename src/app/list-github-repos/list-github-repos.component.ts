@@ -28,6 +28,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   errors = false;
   pageNumber: number;
   searchTextOld = '';
+  searchStarted = false;
 
   constructor(private githubService: GithubService) {}
 
@@ -87,6 +88,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     }
     this.searchTextOld = this.searchText;
     this.searchText = this.BUSY_TEXT;
+    this.searchStarted = true;
     this.repos = [];
     this.pageNumber = 1;
     this.githubService.pageNumberSubject.next(this.pageNumber);

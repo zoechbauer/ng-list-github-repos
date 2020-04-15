@@ -183,3 +183,14 @@
     </div>
   </div>
 </div>
+<div class="row" *ngIf="!errors && repos.length === 0 && searchStarted">
+  <div class="col-xs-12">
+    <div class="panel panel-danger">
+      <div class="panel-heading">No Repositories found!</div>
+      <div class="panel-body">
+        There are no repositories for the selected
+        <strong>Organization {{ searchOrg }}</strong> available!
+      </div>
+    </div>
+  </div>
+</div>
