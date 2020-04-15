@@ -20,10 +20,10 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
   sortProp = 'A';
-  searchText: string;
+  searchText = '';
   searchTextLabelForText = 'Filter repos in FilterBy Column within ORG';
   searchTextLabelForNumbers = 'Filter repos with value greater than ';
-  searchOrg = '';
+  searchOrg: string;
   // search repos
   errors = false;
   pageNumber: number;
@@ -36,8 +36,8 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
 
     // store selected organization in org search field
     this.githubService.selectedOrg.subscribe((selectedOrg) => {
-      console.log('subscribe to selectedOrg', selectedOrg);
       this.searchOrg = selectedOrg;
+      console.log('subscribe to selectedOrg', selectedOrg, this.searchOrg);
     });
 
     // github api is called in a loop until all records of the organization are received
@@ -50,7 +50,6 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
         .getGitHubOrgRepos(this.searchOrg, this.pageNumber)
         .subscribe(
           (repos: GitHubOrgRepo[]) => {
-            this.errors = false;
             // end loop if empty array returned
             this.pageNumber = repos.length > 0 ? this.pageNumber++ : 0;
             if (this.pageNumber > 0) {
@@ -60,6 +59,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
               this.searchText = this.searchTextOld;
               console.log('repos at end', this.repos);
             }
+            this.errors = false;
             console.log(
               'currentRepos & totalRepos',
               repos.length,

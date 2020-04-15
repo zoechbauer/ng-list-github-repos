@@ -7,14 +7,11 @@
         type="text"
         id="org"
         class="form-control"
-        [(ngModel)]="searchOrg"
+        [value]="searchOrg"
         name="searchOrg"
         required
-        #org="ngModel"
+        disabled
       />
-      <div class="alert alert-danger" *ngIf="!org.valid">
-        Please enter Organization and press Filter button
-      </div>
       <div *ngIf="repos.length" class="text-right total-repos">
         Total: {{ repos.length }}
       </div>

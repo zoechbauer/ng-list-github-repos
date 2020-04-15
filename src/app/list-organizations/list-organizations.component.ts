@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-organizations.component.css'],
 })
 export class ListOrganizationsComponent implements OnInit, OnDestroy {
-  searchOrg = 'Angular';
+  searchOrg = '';
   // switch between ORG grid and repos grid
   showOrganizations = false;
   totalCountOrgSubscription: Subscription;
