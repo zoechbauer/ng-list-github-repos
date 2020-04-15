@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, Subject } from 'rxjs';
+import { Observable, throwError, Subject, BehaviorSubject } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GitHubOrgRepo } from './githubOrganization.model';
@@ -22,6 +22,7 @@ export class GithubService {
   private pageNumber: number;
   pageNumberSubject = new Subject<number>();
   totalCountOrgSubject = new Subject<number>();
+  selectedOrg = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) {}
 
@@ -54,7 +55,7 @@ export class GithubService {
         break;
     }
     url = baseUrl + query;
-    console.log(url);
+    console.log('url', url);
     return url;
   }
 
@@ -122,6 +123,10 @@ export class GithubService {
   }
 
   getGithubOrganizations(org: string) {
+    if (org === undefined || org === '') {
+      console.log('ERROR in getGithubOrganizations: empty Org', org);
+      return;
+    }
     return this.http.get(this.getUrl(this.UrlType.Organization, org)).pipe(
       tap((res: any) => {
         // console.log('items', res);

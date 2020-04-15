@@ -24,7 +24,6 @@ export class FilterPipe implements PipeTransform {
         }
       } else {
         // how to compare Dates?
-        // console.log(propField, searchField);
         if (propField > searchField) {
           filteredArr.push(element);
         }
