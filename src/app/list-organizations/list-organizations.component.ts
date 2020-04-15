@@ -56,7 +56,6 @@ export class ListOrganizationsComponent implements OnInit, OnDestroy {
 
   // filter organizations
   filterOrganization(searchText: string) {
-    this.showOrganizations = true;
     this.latestSearchOrg.next(searchText);
   }
 

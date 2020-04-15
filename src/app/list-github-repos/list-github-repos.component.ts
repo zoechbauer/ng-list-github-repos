@@ -20,21 +20,25 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
   filterProp = 'name';
   filterProperties: SelectOption[] = [];
   sortProp = 'A';
-  searchText = '';
+  searchText: string;
   searchTextLabelForText = 'Filter repos in FilterBy Column within ORG';
   searchTextLabelForNumbers = 'Filter repos with value greater than ';
-  searchOrg = 'Angular';
+  searchOrg = '';
   // search repos
   errors = false;
   pageNumber: number;
   searchTextOld = '';
-  // switch between ORG grid and repos grid
-  showOrganizations = true;
 
   constructor(private githubService: GithubService) {}
 
   ngOnInit(): void {
     this.filterProperties = this.githubService.getFilterProperties();
+
+    // store selected organization in org search field
+    this.githubService.selectedOrg.subscribe((selectedOrg) => {
+      console.log('subscribe to selectedOrg', selectedOrg);
+      this.searchOrg = selectedOrg;
+    });
 
     // github api is called in a loop until all records of the organization are received
     // whenever a next Page Number oberservable arrives, the api is called
@@ -54,6 +58,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
               this.repos.push(...repos);
             } else {
               this.searchText = this.searchTextOld;
+              console.log('repos at end', this.repos);
             }
             console.log(
               'currentRepos & totalRepos',
@@ -82,7 +87,6 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     if (this.searchText === this.BUSY_TEXT) {
       return;
     }
-    this.showOrganizations = false;
     this.searchTextOld = this.searchText;
     this.searchText = this.BUSY_TEXT;
     this.repos = [];
