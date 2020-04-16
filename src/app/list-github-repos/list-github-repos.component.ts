@@ -12,6 +12,7 @@ import { reposFakeData } from '../service/GithubRepos.fakedata';
 })
 export class ListGithubReposComponent implements OnInit, OnDestroy {
   BUSY_TEXT = 'please wait ...';
+  ERROR_TEXT = 'ERROR';
   // array for returned api repos
   repos: GitHubOrgRepo[] = [];
   // for unsubscribe
@@ -44,6 +45,9 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
     // github api is called in a loop until all records of the organization are received
     // whenever a next Page Number oberservable arrives, the api is called
     this.githubService.pageNumberSubject.subscribe((nextPageNumber) => {
+      if (this.errors) {
+        return;
+      }
       this.pageNumber = nextPageNumber;
       console.log('Loop api: pageNumber', this.pageNumber);
 
@@ -68,8 +72,7 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
           },
           (errors) => {
             this.errors = true;
-            this.searchText = this.searchTextOld;
-            console.log('ERR in filterRepos', errors);
+            this.searchText = 'ERROR';
           }
         );
     });
