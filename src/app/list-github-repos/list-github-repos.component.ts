@@ -83,10 +83,9 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
 
   // filter repos of selected organization and searchText
   filterRepos() {
-    // only for layout redesign
-    // use fake data for redesign layout - GitHub allows only limited requests per hour
-    this.repos = reposFakeData;
-    return;
+    // TODO use fake data for redesign layout - GitHub allows only limited requests per hour
+    // this.repos = reposFakeData;
+    // return;
 
     // wait until api loop is closed
     if (this.searchText === this.BUSY_TEXT) {

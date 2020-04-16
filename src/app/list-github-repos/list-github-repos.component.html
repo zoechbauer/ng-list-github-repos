@@ -86,108 +86,95 @@
     >
       <div class="panel-heading">
         <div class="row">
-          <h3 class="panel-title col-md-8">
+          <div class="panel-title col-sm-5">
             <strong>{{ repo.name }}</strong>
-          </h3>
-          <h3 class="panel-title col-md-1">
+          </div>
+          <div class="panel-title col-sm-2">
             {{ !repo.private ? 'Public' : '' }}
-          </h3>
-          <h3 class="panel-title col-md-3">Owner: {{ repo.owner.login }}</h3>
+          </div>
+          <div class="panel-title col-sm-5">
+            <small>Owner:</small> {{ repo.owner.login }}
+          </div>
         </div>
       </div>
       <div class="panel-body">
+        <!-- 1st row -->
         <div class="row">
           <div class="col-md-12">
-            <em class="col-md-1">
-              Desc:
-            </em>
-            <div class="col-md-10">
-              {{ repo.description }}
-            </div>
+            {{ repo.description }}
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
-            <em class="col-md-2">
-              URL:
-            </em>
+          <div *ngIf="repo.description">
+            <br />
+          </div>
+        </div>
+        <!-- 2nd & 3rd row -->
+        <div class="row">
+          <div class="col-sm-2">
             <div *ngIf="repo.html_url">
               <a href="{{ repo.html_url }}" target="_blank" class="col-md-10">
-                {{ repo.html_url }}
+                <small>&rarr;</small> GitHub
               </a>
             </div>
-            <div *ngIf="!repo.html_url">
-              <div class="col-md-10"></div>
-            </div>
-            <em class="col-md-2">
-              WWW:
-            </em>
             <div *ngIf="repo.homepage">
               <a href="{{ repo.homepage }}" target="_blank" class="col-md-10">
-                {{ repo.homepage }}
+                <small>&rarr;</small> WWW
               </a>
             </div>
-            <div class="col-md-10" *ngIf="!repo.homepage"></div>
+            <div *ngIf="!repo.html_url && !repo.homepage">
+              <div class="col-md-2"></div>
+            </div>
           </div>
-
-          <div class="col-md-6">
-            <em class="col-md-2 col-xs-3">
-              Lang:
-            </em>
-            <div class="col-md-8 col-xs-6">
-              {{ repo.language }}
-            </div>
-            <div class="col-md-2 col-xs-3">
-              {{ repo.has_wiki ? 'Wiki' : '.' }}
-            </div>
-            <em class="col-md-2 col-xs-3">
-              Size:
-            </em>
-            <div class="col-md-2 col-xs-9">
-              {{ repo.size }}
-            </div>
-            <em class="col-md-2 col-xs-3">
-              Watchers:
-            </em>
-            <div class="col-md-2 col-xs-9">
-              {{ repo.watchers }}
-            </div>
-            <em class="col-md-2 col-xs-3">
-              Forks:
-            </em>
-            <div class="col-md-2 col-xs-9">
-              {{ repo.forks }}
-            </div>
+          <div class="col-sm-2">
+            <br />
+            {{ repo.has_wiki ? 'Wiki' : '' }}
+          </div>
+          <div class="col-sm-2">
+            Language
+            <br />{{ repo.language }}
+          </div>
+          <div class="col-sm-2">
+            Size
+            <br />{{ repo.size }}
+          </div>
+          <div class="col-sm-2">
+            Watchers
+            <br />{{ repo.watchers }}
+          </div>
+          <div class="col-sm-2">
+            Forks
+            <br />{{ repo.forks }}
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Error Section -->
-<div class="row" *ngIf="errors">
-  <div class="col-xs-12">
-    <div class="panel panel-danger">
-      <div class="panel-heading">
-        Request was canceled by GitHub or because of Network Problems!
-      </div>
-      <div class="panel-body">
-        Did you use this function to often?<br />Github only allows a
-        <strong>limited number of api calls per hour</strong> (e.g. 60 calls per
-        hour).<br /><br />Perhaps there are Network problems.<br /><br />
-        Please try again later.
+  <!-- Error Section -->
+  <div class="row" *ngIf="errors">
+    <div class="col-xs-12">
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          Request was canceled by GitHub or because of Network Problems!
+        </div>
+        <div class="panel-body">
+          Did you use this function to often?<br />Github only allows a
+          <strong>limited number of api calls per hour</strong> (e.g. 60 calls
+          per hour).<br /><br />Perhaps there are Network problems.<br /><br />
+          Please try again later.
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- No data Section -->
-<div class="row" *ngIf="!errors && repos.length === 0 && searchStarted">
-  <div class="col-xs-12">
-    <div class="panel panel-danger">
-      <div class="panel-heading">No Repositories found!</div>
-      <div class="panel-body">
-        There are no repositories for the selected
-        <strong>Organization {{ searchOrg }}</strong> available!
+  <!-- No data Section -->
+  <div class="row" *ngIf="!errors && repos.length === 0 && searchStarted">
+    <div class="col-xs-12">
+      <div class="panel panel-danger">
+        <div class="panel-heading">No Repositories found!</div>
+        <div class="panel-body">
+          There are no repositories for the selected
+          <strong>Organization {{ searchOrg }}</strong> available!
+        </div>
       </div>
     </div>
   </div>
