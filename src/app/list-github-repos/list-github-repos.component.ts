@@ -3,6 +3,7 @@ import { Subscription, Subject, Observable } from 'rxjs';
 import { GithubService } from '../service/github.service';
 import { GitHubOrgRepo } from '../service/githubOrganization.model';
 import { SelectOption } from '../service/selectOption.model';
+import { reposFakeData } from '../service/GithubRepos.fakedata';
 
 @Component({
   selector: 'app-list-github-repos',
@@ -82,6 +83,10 @@ export class ListGithubReposComponent implements OnInit, OnDestroy {
 
   // filter repos of selected organization and searchText
   filterRepos() {
+    // TODO use fake data for redesign layout - GitHub allows only limited requests per hour
+    // this.repos = reposFakeData;
+    // return;
+
     // wait until api loop is closed
     if (this.searchText === this.BUSY_TEXT) {
       return;
