@@ -11,6 +11,7 @@
         name="searchOrg"
         required
         disabled
+        title="Change Organization by clicking on button Organizations"
       />
       <div *ngIf="repos.length" class="text-right total-repos">
         Total: {{ repos.length }}
@@ -32,6 +33,7 @@
         class="form-control"
         name="search"
         [(ngModel)]="searchText"
+        title="search a text in Repository Property of selected Filter Dropdown"
       />
     </div>
     <div class="form-group col-md-2">
@@ -41,6 +43,7 @@
         [(ngModel)]="filterProp"
         class="form-control"
         name="filterProp"
+        title="the Repositories are filtered and sorted by this selection"
         ><option *ngFor="let prop of filterProperties" [value]="prop.value">
           {{ prop.name }}
         </option>
@@ -54,6 +57,7 @@
         class="form-control"
         name="sortProp"
         style="width: 60px;"
+        title="A=ascending sort order, D=descending sort order"
       >
         <option>A</option>
         <option>D</option>
@@ -64,6 +68,7 @@
       <button
         type="submit"
         class="btn btn-primary filter-button"
+        title="Click only for loading repositories of displayed Organization"
         [disabled]="!filterForm.valid"
       >
         Filter Organization
@@ -100,7 +105,7 @@
       <div class="panel-body">
         <!-- 1st row -->
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12" title="Repository Description">
             {{ repo.description }}
           </div>
         </div>
@@ -113,12 +118,22 @@
         <div class="row">
           <div class="col-sm-2">
             <div *ngIf="repo.html_url">
-              <a href="{{ repo.html_url }}" target="_blank" class="col-md-10">
+              <a
+                href="{{ repo.html_url }}"
+                target="_blank"
+                class="col-md-10"
+                title="on clicking at this value the GitHub Site is displayed"
+              >
                 <small>&rarr;</small> GitHub
               </a>
             </div>
             <div *ngIf="repo.homepage">
-              <a href="{{ repo.homepage }}" target="_blank" class="col-md-10">
+              <a
+                href="{{ repo.homepage }}"
+                target="_blank"
+                class="col-md-10"
+                title="on clicking at this value the Project Site is displayed"
+              >
                 <small>&rarr;</small> WWW
               </a>
             </div>

@@ -1,5 +1,11 @@
 <!-- Filter section -->
 <div class="row">
+  <div class="col-sm-12">
+    Please search Organization and select it by clicking on Name
+  </div>
+</div>
+<br />
+<div class="row">
   <form #filterForm="ngForm">
     <div class="form-group col-md-3">
       <label for="org">Organization</label>
@@ -9,13 +15,11 @@
         class="form-control"
         [(ngModel)]="searchOrg"
         name="searchOrg"
+        title="after entering a search string the first 100 organizations matching that string are displayed"
         required
         #org="ngModel"
         (ngModelChange)="filterOrganization($event)"
       />
-      <div *ngIf="!org.valid">
-        Please search Organization <br />and select it by click on Name
-      </div>
     </div>
   </form>
 </div>
@@ -29,8 +33,8 @@
         starting with the Search text are displayed
       </div>
       <div class="panel-heading" *ngIf="allOrgs">
-        <strong>Searching Organizations</strong> - please click on Organisation
-        Name to select Organization for filtering Repositories!
+        <strong>Searching Organizations</strong> - all Organisations matching
+        that string are displayed
       </div>
       <div
         class="panel-body small-padding"
@@ -45,11 +49,20 @@
             style="cursor: default;"
           />
         </div>
-        <div class="col-md-4" (click)="onClickOrganization($event)">
+        <div
+          class="col-md-4"
+          (click)="onClickOrganization($event)"
+          title="on clicking at this column the Organization is selected for filtering the repositories"
+        >
           {{ org.login }}
         </div>
         <div class="col-md-4">
-          <a href="{{ org.url }}" target="_blank">&rarr; GitHub WebSite</a>
+          <a
+            href="{{ org.url }}"
+            target="_blank"
+            title="on clicking at this column the GitHub Site is displayed"
+            >&rarr; GitHub WebSite</a
+          >
         </div>
       </div>
     </div>

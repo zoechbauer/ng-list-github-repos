@@ -3,10 +3,18 @@
     <div class="col-xs-12">
       <app-header></app-header>
       <ul class="nav nav-pills">
-        <li role="presentation" routerLinkActive="active">
+        <li
+          role="presentation"
+          routerLinkActive="active"
+          title="Filter Organizations and select one to filter Repositories"
+        >
           <a routerLink="/org/api">Organizations</a>
         </li>
-        <li role="presentation" routerLinkActive="active">
+        <li
+          role="presentation"
+          routerLinkActive="active"
+          title="Filter Repositories of selected Organization"
+        >
           <a [routerLink]="['/repos/api']">Repositories</a>
         </li>
       </ul>
