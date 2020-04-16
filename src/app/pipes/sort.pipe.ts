@@ -10,10 +10,17 @@ export class SortPipe implements PipeTransform {
     }
     return value.sort((a, b) => {
       // console.log('sort', a, b);
+      // console.log('a[propName]', a[propName]);
+
       const propA =
-        a[propName] !== undefined ? a[propName].toLocaleLowerCase() : '';
+        typeof a[propName] === 'string'
+          ? a[propName].toLocaleLowerCase()
+          : a[propName];
       const propB =
-        b[propName] !== undefined ? b[propName].toLocaleLowerCase() : '';
+        typeof b[propName] === 'string'
+          ? b[propName].toLocaleLowerCase()
+          : b[propName];
+
       if (
         sortOrder.toLocaleLowerCase() === 'd' ||
         sortOrder.toLocaleLowerCase() === 'desc'
